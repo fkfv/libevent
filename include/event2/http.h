@@ -1060,6 +1060,10 @@ struct evbuffer *evhttp_request_get_output_buffer(struct evhttp_request *req);
 EVENT2_EXPORT_SYMBOL
 const char *evhttp_request_get_host(struct evhttp_request *req);
 
+/** Get the HTTP request version */
+EVENT2_EXPORT_SYMBOL
+void evhttp_request_get_version(struct evhttp_request *req, char *major, char *minor);
+
 /* Interfaces for dealing with HTTP headers */
 
 /**

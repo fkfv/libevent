@@ -4418,6 +4418,13 @@ evhttp_request_get_host(struct evhttp_request *req)
 	return host;
 }
 
+void
+evhttp_request_get_version(struct evhttp_request *req, char *major, char *minor)
+{
+	*major = req->major;
+	*minor = req->minor;
+}
+
 enum evhttp_cmd_type
 evhttp_request_get_command(const struct evhttp_request *req) {
 	return (req->type);
