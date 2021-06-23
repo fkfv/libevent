@@ -2732,6 +2732,21 @@ evhttp_connection_get_addr(struct evhttp_connection *evcon)
 	return bufferevent_socket_get_conn_address_(evcon->bufev);
 }
 
+struct bufferevent *
+evhttp_connection_take_ownership(struct evhttp_connection *evcon)
+{
+	struct bufferevent *bev = evhttp_connection_get_bufferevent(evcon);
+
+	/* reset the callbacks. done before taking away the bufev since the existing
+	   callbacks require bufev is non-null. */
+	bufferevent_setcb(bev, NULL, NULL, NULL, NULL);
+	evcon->bufev = NULL;
+
+	evhttp_connection_free_(evcon, 0);
+
+	return bev;
+}
+
 int
 evhttp_connection_connect_(struct evhttp_connection *evcon)
 {

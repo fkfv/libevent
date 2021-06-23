@@ -665,6 +665,7 @@ struct evhttp_connection *evhttp_connection_base_bufferevent_new(
 
 /**
  * Return the bufferevent that an evhttp_connection is using.
+ * @see evhttp_connection_take_ownership()
  */
 EVENT2_EXPORT_SYMBOL
 struct bufferevent* evhttp_connection_get_bufferevent(struct evhttp_connection *evcon);
@@ -974,6 +975,17 @@ void evhttp_connection_get_peer(struct evhttp_connection *evcon,
 EVENT2_EXPORT_SYMBOL
 const struct sockaddr*
 evhttp_connection_get_addr(struct evhttp_connection *evcon);
+
+/** Take ownership of the bufferevent associated with a HTTP connection. The
+ * HTTP protocol processing events will be unlinked and the new owner will be
+ * responsible for disposing of the bufferevent when it is finished with.
+ *
+ * @return bufferevent behind the HTTP connection, or NULL if the connection is
+ * already in a state where the bufferevent is no longer useful.
+ */
+EVENT2_EXPORT_SYMBOL
+struct bufferevent *
+evhttp_connection_take_ownership(struct evhttp_connection *evcon);
 
 /**
     Make an HTTP request over the specified connection.
