@@ -2742,7 +2742,7 @@ evhttp_connection_take_ownership(struct evhttp_connection *evcon)
 	bufferevent_setcb(bev, NULL, NULL, NULL, NULL);
 	evcon->bufev = NULL;
 
-	evhttp_connection_free_(evcon, 0);
+	evhttp_connection_free(evcon);
 
 	return bev;
 }
